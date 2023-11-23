@@ -1,6 +1,8 @@
 // ===== IMPORTS ===== \\
 import express from "express";
 import cors from "cors";
+import substitutesRouter from "./substitutes.js";
+import shiftsRouter from "./shifts.js";
 
 // ===== VARIABLES ===== \\
 const app = express();
@@ -15,6 +17,10 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.send("Main route...");
 });
+
+//substitutes og shifts router
+app.use("/substitutes", substitutesRouter);
+app.use("/shifts", shiftsRouter);
 
 // ===== PORT LISTENER ===== \\
 app.listen(port, () => {
