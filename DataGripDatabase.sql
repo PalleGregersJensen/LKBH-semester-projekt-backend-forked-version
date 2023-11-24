@@ -5,6 +5,7 @@ CREATE TABLE Substitutes (
     DateOfBirth date,
     Mail varchar(255),
     Number int,
+    IsAdmin boolean,
     Username varchar(255),
     PasswordHash varchar(64),
     PRIMARY KEY (EmployeeID)
@@ -21,18 +22,6 @@ CREATE TABLE Shifts (
     FOREIGN KEY (EmployeeID) REFERENCES Substitutes(EmployeeID)
 );
 
-CREATE TABLE Shifts (
-    ShiftID int NOT NULL AUTO_INCREMENT,
-    Date date,
-    ShiftStart datetime,
-    ShiftEnd datetime,
-    EmployeeID int,
-    ShiftIsTaken boolean,
-    PRIMARY KEY (ShiftID),
-    FOREIGN KEY (EmployeeID) REFERENCES Substitutes(EmployeeID)
-);
-
-
 CREATE TABLE ShiftInterest (
     ShiftID int,
     EmployeeID int,
@@ -42,33 +31,33 @@ CREATE TABLE ShiftInterest (
 );
 
 -- Insert 20 unique substitutes
-INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, Username, PasswordHash)
+INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
 VALUES
-    ('Anders', 'Nielsen', '1990-01-01', 'anders.nielsen@example.com', 12345678, 'andersn', SHA2('password1', 256)),
-    ('Mette', 'Pedersen', '1992-05-15', 'mette.pedersen@example.com', 23456789, 'mettep', SHA2('password2', 256)),
-    ('Lars', 'Madsen', '1985-07-20', 'lars.madsen@example.com', 34567890, 'larsm', SHA2('password3', 256)),
-    ('Maja', 'Olsen', '1993-03-10', 'maja.olsen@example.com', 45678901, 'majao', SHA2('password4', 256)),
-    ('Claus', 'Christensen', '1988-11-25', 'claus.christensen@example.com', 56789012, 'clausc', SHA2('password5', 256)),
-    ('Anna', 'Jensen', '1994-08-12', 'anna.jensen@example.com', 67890123, 'annaj', SHA2('password6', 256)),
-    ('Peter', 'Rasmussen', '1987-02-28', 'peter.rasmussen@example.com', 78901234, 'peter', SHA2('password7', 256)),
-    ('Louise', 'Hansen', '1991-06-05', 'louise.hansen@example.com', 89012345, 'louiseh', SHA2('password8', 256)),
-    ('Nikolaj', 'Olesen', '1986-09-18', 'nikolaj.olesen@example.com', 90123456, 'nikolajo', SHA2('password9', 256)),
-    ('Sofie', 'Thomsen', '1995-04-25', 'sofie.thomsen@example.com', 12345098, 'sofiet', SHA2('password10', 256)),
-    ('Kristian', 'Poulsen', '1989-12-08', 'kristian.poulsen@example.com', 23456789, 'kristianp', SHA2('password11', 256)),
-    ('Laura', 'Johansen', '1990-03-15', 'laura.johansen@example.com', 34567890, 'lauraj', SHA2('password12', 256)),
-    ('Rasmus', 'Mortensen', '1983-07-22', 'rasmus.mortensen@example.com', 45678901, 'rasmusm', SHA2('password13', 256)),
-    ('Maria', 'Andersen', '1992-11-11', 'maria.andersen@example.com', 56789012, 'mariam', SHA2('password14', 256)),
-    ('Mikkel', 'Larsen', '1984-05-30', 'mikkel.larsen@example.com', 67890123, 'mikkel', SHA2('password15', 256)),
-    ('Camilla', 'Christiansen', '1993-09-09', 'camilla.christiansen@example.com', 78901234, 'camillac', SHA2('password16', 256)),
-    ('Andreas', 'Olsen', '1988-01-26', 'andreas.olsen@example.com', 89012345, 'andreaso', SHA2('password17', 256)),
-    ('Nina', 'Rasmussen', '1996-04-03', 'nina.rasmussen@example.com', 90123456, 'ninar', SHA2('password18', 256)),
-    ('Christian', 'Hansen', '1985-08-20', 'christian.hansen@example.com', 12345098, 'christianh', SHA2('password19', 256)),
-    ('Lene', 'Jensen', '1997-12-16', 'lene.jensen@example.com', 23456789, 'lenej', SHA2('password20', 256));
+    ('Anders', 'Nielsen', '1990-01-01', 'anders.nielsen@example.com', 12345678, false, 'andersn', SHA2('password1', 256)),
+    ('Mette', 'Pedersen', '1992-05-15', 'mette.pedersen@example.com', 23456789, false, 'mettep', SHA2('password2', 256)),
+    ('Lars', 'Madsen', '1985-07-20', 'lars.madsen@example.com', 34567890, false, 'larsm', SHA2('password3', 256)),
+    ('Maja', 'Olsen', '1993-03-10', 'maja.olsen@example.com', 45678901, false, 'majao', SHA2('password4', 256)),
+    ('Claus', 'Christensen', '1988-11-25', 'claus.christensen@example.com', 56789012, false, 'clausc', SHA2('password5', 256)),
+    ('Anna', 'Jensen', '1994-08-12', 'anna.jensen@example.com', 67890123, false, 'annaj', SHA2('password6', 256)),
+    ('Peter', 'Rasmussen', '1987-02-28', 'peter.rasmussen@example.com', 78901234, false, 'peter', SHA2('password7', 256)),
+    ('Louise', 'Hansen', '1991-06-05', 'louise.hansen@example.com', 89012345, false, 'louiseh', SHA2('password8', 256)),
+    ('Nikolaj', 'Olesen', '1986-09-18', 'nikolaj.olesen@example.com', 90123456, false, 'nikolajo', SHA2('password9', 256)),
+    ('Sofie', 'Thomsen', '1995-04-25', 'sofie.thomsen@example.com', 12345098, false, 'sofiet', SHA2('password10', 256)),
+    ('Kristian', 'Poulsen', '1989-12-08', 'kristian.poulsen@example.com', 23456789, false, 'kristianp', SHA2('password11', 256)),
+    ('Laura', 'Johansen', '1990-03-15', 'laura.johansen@example.com', 34567890, false, 'lauraj', SHA2('password12', 256)),
+    ('Rasmus', 'Mortensen', '1983-07-22', 'rasmus.mortensen@example.com', 45678901, false, 'rasmusm', SHA2('password13', 256)),
+    ('Maria', 'Andersen', '1992-11-11', 'maria.andersen@example.com', 56789012, false, 'mariam', SHA2('password14', 256)),
+    ('Mikkel', 'Larsen', '1984-05-30', 'mikkel.larsen@example.com', 67890123, false, 'mikkel', SHA2('password15', 256)),
+    ('Camilla', 'Christiansen', '1993-09-09', 'camilla.christiansen@example.com', 78901234, false, 'camillac', SHA2('password16', 256)),
+    ('Andreas', 'Olsen', '1988-01-26', 'andreas.olsen@example.com', 89012345, false, 'andreaso', SHA2('password17', 256)),
+    ('Nina', 'Rasmussen', '1996-04-03', 'nina.rasmussen@example.com', 90123456, false, 'ninar', SHA2('password18', 256)),
+    ('Christian', 'Hansen', '1985-08-20', 'christian.hansen@example.com', 12345098, false, 'christianh', SHA2('password19', 256)),
+    ('Lene', 'Jensen', '1997-12-16', 'lene.jensen@example.com', 23456789, false, 'lenej', SHA2('password20', 256));
 
--- Insert 1 unique administrator as a substitute 
-INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, Username, PasswordHash)
+-- Insert 1 unique administrator as a substitute
+INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
 VALUES
-    ('Nicolai', 'Viking', '1970-01-10', 'nicolai.viking@example.com', 87654321, 'nicolain', SHA2('adminpassword', 256));
+    ('Nicolai', 'Viking', '1970-01-10', 'nicolai.viking@example.com', 87654321, true, 'nicolain', SHA2('adminpassword', 256));
 
 
 INSERT INTO Shifts (Date, ShiftStart, ShiftEnd, EmployeeID, ShiftIsTaken)
