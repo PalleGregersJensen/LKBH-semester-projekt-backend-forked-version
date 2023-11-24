@@ -8,10 +8,9 @@ const substitutesRouter = Router();
 substitutesRouter.get("/", (req, res) => {
     let queryString = ``;
 
-    //test test her skal der refereres til vikar table istedet
-    // queryString = /*sql*/ `
-    //     SELECT * FROM testnames 
-    // `;
+    queryString = /*sql*/ `
+        SELECT * FROM substitutes 
+    `;
 
     connection.query(queryString, (err, results) => {
         if (err) {

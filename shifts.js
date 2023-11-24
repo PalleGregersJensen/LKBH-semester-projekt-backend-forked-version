@@ -8,9 +8,8 @@ const shiftsRouter = Router();
 shiftsRouter.get("/", (req, res) => {
     let queryString = ``;
 
-    //test test her skal der refereres til vikar table istedet
     queryString = /*sql*/ `
-        SELECT * FROM testnames
+        SELECT * FROM shifts
     `;
 
     connection.query(queryString, (err, results) => {
