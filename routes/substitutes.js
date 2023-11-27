@@ -23,7 +23,7 @@ substitutesRouter.get("/", (req, res) => {
     });
 });
 
-// ===== GET SINGLE SUBSTITUTE FROM ID ===== \\
+// ===== GET SINGLE SUBSTITUTE WITH ID ===== \\
 substitutesRouter.get("/:id", (req, res) => {
     let queryString = ``;
 
@@ -72,6 +72,25 @@ substitutesRouter.post("/", (req, res) => {
             }
         }
     );
+});
+
+// ===== DELETE SUBSTITUTE WITH ID ===== \\
+substitutesRouter.delete("/:id", (req, res) => {
+    let queryString = ``;
+
+    queryString = /*sql*/ `
+        DELETE FROM substitutes WHERE EmployeeID = ?
+    `;
+
+    connection.query(queryString, [req.params.id], (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+        } else {
+            console.log(`Deleted ${results.affectedRows} person(s) where id was ${req.params.id}`);
+            res.json(results);
+        }
+    });
 });
 
 export default substitutesRouter;
