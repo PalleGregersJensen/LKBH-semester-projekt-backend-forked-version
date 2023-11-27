@@ -1,15 +1,15 @@
 // ===== IMPORTS ===== \\
 import { Router } from "express";
-import connection from "./database.js";
+import connection from "../database.js";
 
-const substitutesRouter = Router();
+const shiftsRouter = Router();
 
-// ===== SUBSTITUTE ROUTES ===== \\
-substitutesRouter.get("/", (req, res) => {
+// ===== SHIFTS ROUTES ===== \\
+shiftsRouter.get("/", (req, res) => {
     let queryString = ``;
 
     queryString = /*sql*/ `
-        SELECT * FROM substitutes 
+        SELECT * FROM shifts ORDER BY DATE
     `;
 
     connection.query(queryString, (err, results) => {
@@ -17,10 +17,10 @@ substitutesRouter.get("/", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            console.log(results)
+            console.log(results);
             res.json(results);
         }
     });
 });
 
-export default substitutesRouter;
+export default shiftsRouter;
