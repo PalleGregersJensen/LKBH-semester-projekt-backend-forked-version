@@ -12,6 +12,13 @@ const dbConfig = {
     multipleStatements: true,
 };
 
+// CERT Connection and verification
+/* 
+if (process.env.MYSQL_CERT) {
+     dbConfig.ssl = { ca: await fs.readFile("DigiCertGlobalRootCA.crt.pem") };
+ }
+*/
+
 //MySQL forbindelse
 const connection = mysql.createConnection(dbConfig);
 
@@ -19,7 +26,7 @@ connection.connect((err) => {
     if (err) {
         console.log("Fejl ved oprettelse til databasen: " + err);
     } else {
-        console.log("Forbindelse til databasen oprettet!")
+        console.log("Forbindelse til databasen oprettet!");
     }
 });
 

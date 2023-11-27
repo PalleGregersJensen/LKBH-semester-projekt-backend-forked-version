@@ -1,15 +1,15 @@
 // ===== IMPORTS ===== \\
 import { Router } from "express";
-import connection from "./database.js";
+import connection from "../database.js";
 
-const shiftsRouter = Router();
+const substitutesRouter = Router();
 
-// ===== SHIFTS ROUTES ===== \\
-shiftsRouter.get("/", (req, res) => {
+// ===== SUBSTITUTE ROUTES ===== \\
+substitutesRouter.get("/", (req, res) => {
     let queryString = ``;
 
     queryString = /*sql*/ `
-        SELECT * FROM shifts
+        SELECT * FROM substitutes 
     `;
 
     connection.query(queryString, (err, results) => {
@@ -23,4 +23,4 @@ shiftsRouter.get("/", (req, res) => {
     });
 });
 
-export default shiftsRouter;
+export default substitutesRouter;
