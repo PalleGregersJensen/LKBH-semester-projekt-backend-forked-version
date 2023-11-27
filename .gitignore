@@ -1,3 +1,42 @@
-*node_modules
+# Ignorer kompilerede filer og mapper
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Ignorer IDE-specifikke filer og mapper
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Ignorer bygningsoutput og logfiler
+/build/
+/dist/
+/out/
+/logs/
+
+# Ignorer afhængigheder og biblioteker
+/node_modules/
+/bower_components/
+/.venv/
+/.env/
+
+# Ignorer konfigurationsfiler med følsomme oplysninger
 .env
-*vscode/
+.env.local
+.env.*.local
+.env.test
+.env.test.local
+
+# Ignorer genererede filer og mapper
+/public/
+/generated/
+
+# Ignorer backupfiler
+*~
+*.bak
