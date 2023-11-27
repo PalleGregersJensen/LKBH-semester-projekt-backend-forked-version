@@ -87,10 +87,66 @@ substitutesRouter.delete("/:id", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            console.log(`Deleted ${results.affectedRows} person(s) where id was ${req.params.id}`);
+            console.log(`Deleted ${results.affectedRows} person where id was ${req.params.id}`);
             res.json(results);
         }
     });
 });
 
+// ===== UPDATE SUBSTITUTE WITH ID ===== \\
+
+// ### ADMIN UPDATE ROUTE ### \\
+substitutesRouter.put("/admins/:id", (req, res) => {
+    let queryString = ``;
+
+    queryString = /*sql*/ `
+        UPDATE substitutes SET FirstName = ?, LastName = ?, DateOfBirth = ?, Mail = ?, Number = ?, Username = ?, PasswordHash = ? WHERE EmployeeID = ?
+    `;
+
+    connection.query(
+        queryString,
+        [
+            req.body.FirstName,
+            req.body.LastName,
+            req.body.DateOfBirth,
+            req.body.Mail,
+            req.body.Number,
+            req.body.Username,
+            req.body.PasswordHash,
+            req.params.id,
+        ],
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+            } else {
+                console.log(`Admin updated ${results.affectedRows} person where id was ${req.params.id}`);
+                res.json(results);
+            }
+        }
+    );
+});
+
+// ### SUBSTITUTE UPDATE ROUTE ### \\
+substitutesRouter.put("/:id", (req, res) => {
+    let queryString = ``;
+
+    queryString = /*sql*/ `
+        UPDATE substitutes SET Mail = ?, Number = ?, PasswordHash = ? WHERE EmployeeID = ?
+    `;
+
+    connection.query(
+        queryString,
+        [req.body.Mail, req.body.Number, req.body.PasswordHash, req.params.id],
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+            } else {
+                console.log(`User updated ${results.affectedRows} person where id was ${req.params.id}`);
+                res.json(results);
+            }
+        }
+    );
+});
 export default substitutesRouter;
