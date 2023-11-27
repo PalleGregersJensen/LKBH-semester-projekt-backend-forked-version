@@ -21,9 +21,11 @@ loginRouter.post("/", (req, res) => {
             res.status(500).json({ error: "Der opstod en fejl ved forespørgslen!" });
         } else {
             if (results.length > 0 && results[0].PasswordHash === user.password) {
+                const isAdmin = results[0].IsAdmin;
+                console.log(isAdmin);
                 // Brugernavn og adgangskode er korrekte
                 console.log("Login successful");
-                res.json({ success: true });
+                res.json({ success: true, isAdmin });
             } else {
                 // Brugernavn eller adgangskode er forkert
                 console.log("Login failed");
