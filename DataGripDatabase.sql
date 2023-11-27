@@ -1,22 +1,22 @@
 CREATE TABLE Substitutes (
     EmployeeID int NOT NULL AUTO_INCREMENT,
-    FirstName varchar(255),
-    LastName varchar(255),
-    DateOfBirth date,
-    Mail varchar(255),
-    Number int,
+    FirstName varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    DateOfBirth date NOT NULL,
+    Mail varchar(255) NOT NULL,
+    Number int NOT NULL,
     IsAdmin boolean,
-    Username varchar(255),
-    PasswordHash varchar(64),
+    Username varchar(255) NOT NULL,
+    PasswordHash varchar(64) NOT NULL,
     PRIMARY KEY (EmployeeID)
 );
 
 CREATE TABLE Shifts (
     ShiftID int NOT NULL AUTO_INCREMENT,
-    Date date,
-    ShiftStart datetime,
-    ShiftEnd datetime,
-    EmployeeID int,
+    Date date NOT NULL,
+    ShiftStart datetime NOT NULL,
+    ShiftEnd datetime NOT NULL,
+    EmployeeID int ,
     ShiftIsTaken boolean,
     PRIMARY KEY (ShiftID),
     FOREIGN KEY (EmployeeID) REFERENCES Substitutes(EmployeeID)
