@@ -48,5 +48,22 @@ shiftsRouter.get("/:id", (req, res) => {
 // ===== UPDATE SHIFT WITH ID ===== \\
 
 // ===== DELETE SHIFT WITH ID ===== \\
+shiftsRouter.delete("/:id", (req, res) => {
+    let queryString = ``;
+
+    queryString = /*sql*/ `
+        DELETE FROM shifts WHERE ShiftID = ?
+    `;
+
+    connection.query(queryString, [req.params.id], (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+        } else {
+            // console.log(results);
+            res.json(results);
+        }
+    });
+});
 
 export default shiftsRouter;
