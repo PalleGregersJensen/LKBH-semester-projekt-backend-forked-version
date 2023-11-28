@@ -94,7 +94,6 @@ substitutesRouter.delete("/:id", (req, res) => {
 });
 
 // ===== UPDATE SUBSTITUTE WITH ID ===== \\
-
 // ### ADMIN UPDATE ROUTE ### \\
 substitutesRouter.put("/admins/:id", (req, res) => {
     let queryString = ``;
