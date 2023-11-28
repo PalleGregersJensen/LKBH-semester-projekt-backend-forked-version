@@ -28,7 +28,7 @@ substitutesRouter.get("/:id", (req, res) => {
     let queryString = ``;
 
     queryString = /*sql*/ `
-        SELECT * FROM substitutes WHERE id = ?
+        SELECT * FROM substitutes WHERE EmployeeID = ?
     `;
 
     connection.query(queryString, [req.params.id], (err, results) => {
