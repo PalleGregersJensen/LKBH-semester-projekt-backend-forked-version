@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import substitutesRouter from "./routes/substitutes.js";
 import shiftsRouter from "./routes/shifts.js";
+import loginRouter from "./routes/login.js"
 
 // ===== VARIABLES ===== \\
 const app = express();
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 //substitutes og shifts router
 app.use("/substitutes", substitutesRouter);
 app.use("/shifts", shiftsRouter);
+app.use("/login", loginRouter);
 
 // ===== PORT LISTENER ===== \\
 app.listen(port, () => {
