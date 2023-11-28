@@ -5,7 +5,6 @@ import connection from "../database.js";
 const shiftsRouter = Router();
 
 // ===== GET ALL SHIFTS ===== \\
-// TO DO: FIX THE res.json(results) SO IT SHOWS SOMETHING USEFUL
 shiftsRouter.get("/", (req, res) => {
     let queryString = ``;
 
@@ -18,14 +17,12 @@ shiftsRouter.get("/", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            // console.log(results);
             res.json(results);
         }
     });
 });
 
 // ===== GET SINGLE SHIFT WITH ID ===== \\
-// TO DO: FIX THE res.json(results) SO IT SHOWS SOMETHING USEFUL
 shiftsRouter.get("/:id", (req, res) => {
     let queryString = ``;
 
@@ -38,18 +35,17 @@ shiftsRouter.get("/:id", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            // console.log(results);
             res.json(results);
         }
     });
 });
 
 // ===== CREATE NEW SHIFT ===== \\
-// TO DO: FIX THE res.json(results) SO IT SHOWS SOMETHING USEFUL
 shiftsRouter.post("/", (req, res) => {
     let queryString = ``;
 
     // Formatér tidspunkterne til MySQL-format
+    // const formattedDate = new Date(req.body.Date).toISOString().slice(0, 19).replace("T", " ");
     const formattedShiftStart = new Date(req.body.ShiftStart).toISOString().slice(0, 19).replace("T", " ");
     const formattedShiftEnd = new Date(req.body.ShiftEnd).toISOString().slice(0, 19).replace("T", " ");
 
@@ -65,18 +61,39 @@ shiftsRouter.post("/", (req, res) => {
                 console.log(err);
                 res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
             } else {
-                // console.log(results);
-                res.json(results);
+                res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
             }
         }
     );
 });
 
 // ===== UPDATE SHIFT WITH ID ===== \\
-// TO DO: FIX THE res.json(results) SO IT SHOWS SOMETHING USEFUL
+shiftsRouter.put("/:id", (req, res) => {
+    let queryString = ``;
+
+    queryString = /*sql*/ `
+        UPDATE shifts SET ShiftIsTaken = ?, EmployeeID = ? WHERE ShiftID = ?
+    `;
+
+    connection.query(queryString, [req.body.ShiftIsTaken, req.body.EmployeeID, req.params.id], (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "Der opstod en fejl ved forespørgslen!" });
+        } else {
+            if (results.affectedRows > 0) {
+                res.status(200).json({
+                    message: "Shift opdateret med succes",
+                    id: req.params.id,
+                    updatedFields: req.body,
+                });
+            } else {
+                res.status(404).json({ error: "Shift med angivet ID blev ikke fundet." });
+            }
+        }
+    });
+});
 
 // ===== DELETE SHIFT WITH ID ===== \\
-// TO DO: FIX THE res.json(results) SO IT SHOWS SOMETHING USEFUL
 shiftsRouter.delete("/:id", (req, res) => {
     let queryString = ``;
 
@@ -89,8 +106,7 @@ shiftsRouter.delete("/:id", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            // console.log(results);
-            res.json(results);
+            res.status(201).json({ message: "Succesfuld sletning af 'shift'.", id: req.params.id });
         }
     });
 });

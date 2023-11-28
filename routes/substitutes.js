@@ -17,7 +17,6 @@ substitutesRouter.get("/", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            // console.log(results);
             res.json(results);
         }
     });
@@ -36,7 +35,6 @@ substitutesRouter.get("/:id", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            // console.log(results);
             res.json(results);
         }
     });
@@ -67,8 +65,7 @@ substitutesRouter.post("/", (req, res) => {
                 console.log(err);
                 res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
             } else {
-                console.log(results);
-                res.json(results);
+                res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
             }
         }
     );
@@ -87,8 +84,7 @@ substitutesRouter.delete("/:id", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            console.log(`Deleted ${results.affectedRows} person where id was ${req.params.id}`);
-            res.json(results);
+            res.status(201).json({ message: "Succesfuld sletning af vikar.", id: req.params.id });
         }
     });
 });
@@ -119,8 +115,15 @@ substitutesRouter.put("/admins/:id", (req, res) => {
                 console.log(err);
                 res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
             } else {
-                console.log(`Admin updated ${results.affectedRows} person where id was ${req.params.id}`);
-                res.json(results);
+                if (results.affectedRows > 0) {
+                    res.status(200).json({
+                        message: "Medarbejder opdateret med succes fra admin.",
+                        id: req.params.id,
+                        updatedFields: req.body,
+                    });
+                } else {
+                    res.status(404).json({ error: "Medarbejder med angivet ID blev ikke fundet." });
+                }
             }
         }
     );
@@ -142,8 +145,15 @@ substitutesRouter.put("/:id", (req, res) => {
                 console.log(err);
                 res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
             } else {
-                console.log(`User updated ${results.affectedRows} person where id was ${req.params.id}`);
-                res.json(results);
+                if (results.affectedRows > 0) {
+                    res.status(200).json({
+                        message: "Medarbejder opdateret med succes fra admin.",
+                        id: req.params.id,
+                        updatedFields: req.body,
+                    });
+                } else {
+                    res.status(404).json({ error: "Medarbejder med angivet ID blev ikke fundet." });
+                }
             }
         }
     );
