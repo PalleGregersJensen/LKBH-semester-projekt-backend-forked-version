@@ -40,4 +40,34 @@ shiftInterestsRouter.get("/:id", (req, res) => {
     });
 });
 
+// ===== CREATE NEW SHIFT-INTEREST ===== \\
+shiftInterestsRouter.post("/", (req, res) => {
+    const { ShiftID, EmployeeID } = req.body;
+
+    // Check if required fields are filled out
+    if (!ShiftID || !EmployeeID) {
+        return res.status(400).json({ error: "ShiftID and EmployeeID are required fields." });
+    }
+
+    // SQL query string
+    const queryString = /*sql*/ `
+        INSERT INTO shiftinterest (ShiftID, EmployeeID)
+        VALUES (?, ?)
+    `;
+
+    // Insert new shift-interest into database
+    connection.query(queryString, [ShiftID, EmployeeID], (err, results) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ error: "An error occurred while creating a new shift-interest." });
+        }
+
+        return res.status(201).json({ message: "Shift interest created successfully.", id: results.insertId });
+    });
+});
+
+// ===== CONFIRM SHIFT-INTEREST ===== \\
+
+// ===== DELETE SIMILAR SHIFT-INTEREST ===== \\
+
 export default shiftInterestsRouter;
