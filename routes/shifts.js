@@ -50,12 +50,12 @@ shiftsRouter.post("/", (req, res) => {
     const formattedShiftEnd = new Date(req.body.ShiftEnd).toISOString().slice(0, 19).replace("T", " ");
 
     queryString = /*sql*/ `
-        INSERT INTO shifts (Date, ShiftStart, ShiftEnd, ShiftIsTaken, EmployeeID) VALUES (?, ?, ?, ?, ?)
+        INSERT INTO shifts (Date, ShiftStart, ShiftEnd,  EmployeeID) VALUES (?, ?, ?, ?)
     `;
 
     connection.query(
         queryString,
-        [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.ShiftIsTaken, req.body.EmployeeID],
+        [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.EmployeeID],
         (err, results) => {
             if (err) {
                 console.log(err);
