@@ -30,6 +30,31 @@ CREATE TABLE ShiftInterest (
     FOREIGN KEY (EmployeeID) REFERENCES Substitutes(EmployeeID)
 );
 
+-- Trigger to automaticly change "shiftIsTaken", when EmployeeID is either null or has a value
+CREATE TRIGGER set_shift_taken
+BEFORE INSERT ON shifts
+FOR EACH ROW
+BEGIN
+    IF NEW.EmployeeID IS NOT NULL THEN
+        SET NEW.ShiftIsTaken = 1;
+    ELSE
+        SET NEW.ShiftIsTaken = 0;
+    END IF;
+END;
+
+-- Trigger to automaticly change "shiftIsTaken", when EmployeeID is opdated
+CREATE TRIGGER update_shift_taken
+BEFORE UPDATE ON shifts
+FOR EACH ROW
+BEGIN
+    IF NEW.EmployeeID IS NOT NULL THEN
+        SET NEW.ShiftIsTaken = TRUE;
+    ELSE
+        SET NEW.ShiftIsTaken = FALSE;
+    END IF;
+END;
+
+
 -- Insert 20 unique substitutes
 INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
 VALUES
