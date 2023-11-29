@@ -72,10 +72,10 @@ shiftsRouter.put("/:id", (req, res) => {
     let queryString = ``;
 
     queryString = /*sql*/ `
-        UPDATE shifts SET ShiftIsTaken = ?, EmployeeID = ? WHERE ShiftID = ?
+        UPDATE shifts SET EmployeeID = ? WHERE ShiftID = ?
     `;
 
-    connection.query(queryString, [req.body.ShiftIsTaken, req.body.EmployeeID, req.params.id], (err, results) => {
+    connection.query(queryString, [req.body.EmployeeID, req.params.id], (err, results) => {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Der opstod en fejl ved forespørgslen!" });

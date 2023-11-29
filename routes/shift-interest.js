@@ -66,8 +66,4 @@ shiftInterestsRouter.post("/", (req, res) => {
     });
 });
 
-// ===== CONFIRM SHIFT-INTEREST ===== \\
-
-// ===== DELETE SIMILAR SHIFT-INTEREST ===== \\
-
 export default shiftInterestsRouter;

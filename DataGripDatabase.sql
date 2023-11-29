@@ -54,6 +54,18 @@ BEGIN
     END IF;
 END;
 
+-- Trigger to automaticly drop "shiftinterests" where "ShiftID" match "ShiftID
+-- from "shifts" where there is a "EmployeeID" value other then null
+CREATE TRIGGER after_shifts_update
+AFTER UPDATE ON shifts
+FOR EACH ROW
+BEGIN
+    IF NEW.EmployeeID IS NOT NULL AND OLD.EmployeeID IS NULL THEN
+        -- EmployeeID has been set to a non-null value
+        DELETE FROM shiftinterest
+        WHERE ShiftID = NEW.ShiftID;
+    END IF;
+END;
 
 -- Insert 20 unique substitutes
 INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
@@ -207,3 +219,7 @@ VALUES
     ('2024-02-21', '2024-02-21 21:30:00', '2024-02-21 05:30:00', NULL, false),
     ('2024-02-22', '2024-02-22 22:30:00', '2024-02-22 06:30:00', 5, true),
     ('2024-02-23', '2024-02-23 23:30:00', '2024-02-23 07:30:00', NULL, false);
+
+-- Test Data to check shiftinterest with to different shifts
+INSERT INTO shiftinterest (ShiftID, EmployeeID) VALUES (2, 3), (2,5), (2,7);
+INSERT INTO shiftinterest (ShiftID, EmployeeID) VALUES (4, 4), (4,6), (4,8);
