@@ -133,29 +133,69 @@ substitutesRouter.put("/admins/:id", (req, res) => {
 substitutesRouter.put("/:id", (req, res) => {
     let queryString = ``;
 
-    queryString = /*sql*/ `
-        UPDATE substitutes SET Mail = ?, Number = ?, PasswordHash = ? WHERE EmployeeID = ?
-    `;
+    // Check if the request body contains the 'Username' and 'PasswordHash' properties
+    if (!req.body.Username && !req.body.PasswordHash) {
+        return res.status(400).json({ error: "Username or PasswordHash is required for update." });
+    }
 
-    connection.query(
-        queryString,
-        [req.body.Mail, req.body.Number, req.body.PasswordHash, req.params.id],
-        (err, results) => {
-            if (err) {
-                console.log(err);
-                res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
-            } else {
-                if (results.affectedRows > 0) {
-                    res.status(200).json({
-                        message: "Medarbejder opdateret med succes fra admin.",
-                        id: req.params.id,
-                        updatedFields: req.body,
-                    });
-                } else {
-                    res.status(404).json({ error: "Medarbejder med angivet ID blev ikke fundet." });
-                }
+    // Construct the SQL query based on the provided fields
+    if (req.body.Username && req.body.PasswordHash) {
+        queryString = /*sql*/ `
+            UPDATE substitutes SET Mail = ?, Number = ?, Username = ?, PasswordHash = ? WHERE EmployeeID = ?
+        `;
+
+        connection.query(
+            queryString,
+            [req.body.Mail, req.body.Number, req.body.Username, req.body.PasswordHash, req.params.id],
+            (err, results) => {
+                handleUpdateResult(err, results, res, req.params.id, req.body);
             }
-        }
-    );
+        );
+    } else if (req.body.Username) {
+        // Update only the 'Username' field
+        queryString = /*sql*/ `
+            UPDATE substitutes SET Mail = ?, Number = ?, Username = ? WHERE EmployeeID = ?
+        `;
+
+        connection.query(
+            queryString,
+            [req.body.Mail, req.body.Number, req.body.Username, req.params.id],
+            (err, results) => {
+                handleUpdateResult(err, results, res, req.params.id, req.body);
+            }
+        );
+    } else if (req.body.PasswordHash) {
+        // Update only the 'PasswordHash' field
+        queryString = /*sql*/ `
+            UPDATE substitutes SET PasswordHash = ? WHERE EmployeeID = ?
+        `;
+
+        connection.query(
+            queryString,
+            [req.body.PasswordHash, req.params.id],
+            (err, results) => {
+                handleUpdateResult(err, results, res, req.params.id, req.body);
+            }
+        );
+    }
 });
+
+// Function to handle the result of the update query
+function handleUpdateResult(err, results, res, id, updatedFields) {
+    if (err) {
+        console.log(err);
+        res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+    } else {
+        if (results.affectedRows > 0) {
+            res.status(200).json({
+                message: "Medarbejder opdateret med succes fra admin.",
+                id: id,
+                updatedFields: updatedFields,
+            });
+        } else {
+            res.status(404).json({ error: "Medarbejder med angivet ID blev ikke fundet." });
+        }
+    }
+}
+
 export default substitutesRouter;
