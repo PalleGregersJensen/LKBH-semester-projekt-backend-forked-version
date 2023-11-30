@@ -67,6 +67,18 @@ BEGIN
     END IF;
 END;
 
+-- Trigger to allways set IsAdmin to false unless admin is set to true in request
+CREATE TRIGGER set_is_admin
+BEFORE INSERT ON substitutes
+FOR EACH ROW
+BEGIN
+    IF NEW.IsAdmin IS NOT NULL THEN
+        SET NEW.IsAdmin = 1;
+    ELSE
+        SET NEW.IsAdmin = 0;
+    END IF;
+END;
+
 -- Insert 20 unique substitutes
 INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
 VALUES
