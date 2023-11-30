@@ -1,6 +1,8 @@
 // ===== IMPORTS ===== \\
 import { Router } from "express";
 import connection from "../database.js";
+// import crypto to encrypt Passwordhash
+import crypto from "crypto";
 
 const substitutesRouter = Router();
 
@@ -44,8 +46,11 @@ substitutesRouter.get("/:id", (req, res) => {
 substitutesRouter.post("/", (req, res) => {
     let queryString = ``;
 
+    // Hash adgangskoden før du gemmer den i databasen
+    const passwordHash = crypto.createHash("sha256").update(req.body.PasswordHash).digest("hex");
+
     queryString = /*sql*/ `
-        INSERT INTO substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO substitutes (FirstName, LastName, DateOfBirth, Mail, Number, Username, IsAdmin, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     connection.query(
@@ -56,9 +61,9 @@ substitutesRouter.post("/", (req, res) => {
             req.body.DateOfBirth,
             req.body.Mail,
             req.body.Number,
-            req.body.IsAdmin,
             req.body.Username,
-            req.body.PasswordHash,
+            req.body.IsAdmin,
+            passwordHash,
         ],
         (err, results) => {
             if (err) {
