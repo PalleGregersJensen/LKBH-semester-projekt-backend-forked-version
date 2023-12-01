@@ -72,7 +72,7 @@ CREATE TRIGGER set_is_admin
 BEFORE INSERT ON substitutes
 FOR EACH ROW
 BEGIN
-    IF NEW.IsAdmin IS NOT NULL THEN
+    IF NEW.IsAdmin IS NOT NULL AND NEW.IsAdmin = true THEN
         SET NEW.IsAdmin = 1;
     ELSE
         SET NEW.IsAdmin = 0;
