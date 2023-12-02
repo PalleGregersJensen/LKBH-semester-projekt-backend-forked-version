@@ -22,7 +22,7 @@ shiftsRouter.get("/", (req, res) => {
     });
 });
 
-// ===== GET ALL SHIFTS ===== \\
+// ===== GET ALL AVALIABLE SHIFTS WITH NAMES ON INTERESTED SUBSTITUTES ===== \\
 shiftsRouter.get("/requestedshifts", (req, res) => {
     let queryString = ``;
 
@@ -40,9 +40,6 @@ shiftsRouter.get("/requestedshifts", (req, res) => {
             LEFT JOIN substitutes ON shiftinterest.EmployeeID = substitutes.EmployeeID
         GROUP BY shifts.ShiftID, shifts.Date, shifts.ShiftStart, shifts.ShiftEnd, shifts.EmployeeID, shifts.ShiftIsTaken;
     `;
-    // queryString = /*sql*/ `
-    //     SELECT * FROM shifts
-    // `;
 
     connection.query(queryString, (err, results) => {
         if (err) {
