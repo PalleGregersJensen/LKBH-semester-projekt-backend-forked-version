@@ -36,8 +36,8 @@ shiftsRouter.get("/requestedshifts", (req, res) => {
             GROUP_CONCAT(substitutes.FirstName) AS FirstName,
             GROUP_CONCAT(substitutes.LastName) AS LastName
         FROM shifts
-            INNER JOIN shiftinterest ON shifts.ShiftID = shiftinterest.ShiftID
-            INNER JOIN substitutes ON shiftinterest.EmployeeID = substitutes.EmployeeID
+            LEFT JOIN shiftinterest ON shifts.ShiftID = shiftinterest.ShiftID
+            LEFT JOIN substitutes ON shiftinterest.EmployeeID = substitutes.EmployeeID
         GROUP BY shifts.ShiftID, shifts.Date, shifts.ShiftStart, shifts.ShiftEnd, shifts.EmployeeID, shifts.ShiftIsTaken;
     `;
     // queryString = /*sql*/ `
@@ -50,8 +50,13 @@ shiftsRouter.get("/requestedshifts", (req, res) => {
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
             results.forEach(result => {
-                result.FirstName = result.FirstName.split(",")
-                result.LastName = result.LastName.split(",");
+                if (result.FirstName) {
+                    result.FirstName = result.FirstName.split(",");
+                    result.LastName = result.LastName.split(",");
+                } else {
+                    result.FirstName = result.FirstName;
+                    result.LastName = result.LastName;
+                }
             })
             res.json(results);
         }
