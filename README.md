@@ -362,14 +362,40 @@ INSERT INTO shiftinterest (ShiftID, EmployeeID) VALUES (4, 4), (4,6), (4,8);
 
 ## Kør program
 
+For at køre backend programmet skal du igen terminalen, efterfølgende er der 3 forskellige måder at køre programmet set nedenfor.
+
 ### npm start
+
+Den første måde er gennem brugen af `node app.js`. Dette er den grundlæggende måde at køre programmet. Ulempen ved at gøre det på denne måde, er at hvis du støder på en `error`, eller der skulle ske noget som gjorde at backend crasher, så ville du være nød til at starte programmet igen.
+
+```bash
+node app.js
+```
+
+Eller;
+
+```bash
+npm start
+```
 
 #### npm run dev
 
+Den anden måde at gennem brugen af `node scriptet dev`. I dette script anvendes `package nodemon`, som er en pakke der hjælper med automatisk at restarte applikationen når der sker en ændring i en files mappe. Selve scriptet der bruge nodemon ser således ud `"dev": "nodemon app.js"` og kan bruges ved at skrive følgende:
+
+```bash
+npm run dev
+```
+
 #### npm run watch
+
+Den tredje måde er gennem brugen af `node scriptet watch`. Watch er en nye node måde at automatisk restarte applikationen når der sker en ændring i en files mappe. I grove træk så gør den det samme som `nodemon`. Men siden at `watch` stadig er tidlig beta er der stadig nogle fejl som kan forekomme. Scriptet der bruge watch ser således ud `"watch": "node --watch app.js"` og kan bruges ved at skrive følgende:
+
+```bash
+npm run watch
+```
 
 ## Slutning
 
-**Tillykke du har nu clonet og opsat både backend og MySQL databasen! 🎉**
+**Tillykke du har nu clonet, opsat både backend og MySQL databasen og kan nu køre programmet! 🎉**
 
 _Dette program er udarbejdet af Jon Lundby Nielsen, Magnus Carstensen, Markus Ingerslev Olsen & Palle Jensen fra Dat23V2._
