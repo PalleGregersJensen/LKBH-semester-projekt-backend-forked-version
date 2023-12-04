@@ -58,6 +58,20 @@ code lkbh-semester-projekt-backend
 
 ## Installation af nødvendige node packages
 
+Nu efter du har clonet programmet og åbnet det, så er det vigtigt at du også har de nødvendige `node packages` som programmet bruger. For at downloade disse `packages` så skal du åbne terminalen i din editer, og skrive følgende kommando.
+
+```bash
+npm i
+```
+
+Eller;
+
+```bash
+npm i cors express mysql2 dotenv nodemon
+```
+
+De to kommandoer gør det samme, den eneste forskellen er at `npm i` eller `npm install`, så downloader du kun de packages, som er lavet som `dependencies` i `package.json`. Hvor at ved kommandoen `npm i cors express mysql dotenv nodemon`, så downloader du specifikke packages du selv diffinere.
+
 ## Benyttelse af backend
 
 ### Opsætning af dotenv
