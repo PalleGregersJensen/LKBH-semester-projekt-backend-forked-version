@@ -34,7 +34,29 @@ Hvis det dog kun, eller af anden årsag er så kan vores frontend-del findes [he
 
 ## Installation af backend
 
-## installation af nødvendige node packages
+For at clone backend projektet skal du blot gøre følgende:
+
+1. Åben din terminal, enten `powershell`, `bash ` eller dit foretrukkende valg.
+
+2. Naviger til den mappe, hvor du gerne vil gemme projektet. _Du kan enten gøre dette være at bruge `cd`-kommandoen, eller åbne en terminal direkte fra den endelige mappe._
+
+```bash
+cd din/målmappe
+```
+
+3. Når dy er i den mappe som projektet skal placeres, så skal du bruge følgende kammando til at clone projektet fra GitHub:
+
+```bash
+git clone https://github.com/MarkusIngerslev/LKBH-semester-projekt-backend.git
+```
+
+4. Du har nu clonet projektet. Hvis du ønsker at åbne det clonet program med det samme, kan du gøre følgende:
+
+```bash
+code lkbh-semester-projekt-backend
+```
+
+## Installation af nødvendige node packages
 
 ## Benyttelse af backend
 
