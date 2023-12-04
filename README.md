@@ -1,5 +1,6 @@
 <div align="center"> 
-    <img src="" style="width: 100%;">
+    Indsæt billed 
+    <!-- <img src="" style="width: 100%;"> -->
 </div>
 
 # LKbh § 107 - Bookning af vikar tider
