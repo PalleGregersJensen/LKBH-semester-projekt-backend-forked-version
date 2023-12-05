@@ -33,8 +33,8 @@ shiftsRouter.get("/requestedshifts", (req, res) => {
             shifts.ShiftEnd,
             shifts.EmployeeID,
             shifts.ShiftIsTaken,
-            GROUP_CONCAT(substitutes.FirstName) AS FirstName,
-            GROUP_CONCAT(substitutes.LastName) AS LastName
+            GROUP_CONCAT(substitutes.FirstName, ' ', substitutes.LastName) AS FullName,
+            GROUP_CONCAT(substitutes.EmployeeID) AS InterestedEmployeeIDs
         FROM shifts
             LEFT JOIN shiftinterest ON shifts.ShiftID = shiftinterest.ShiftID
             LEFT JOIN substitutes ON shiftinterest.EmployeeID = substitutes.EmployeeID
@@ -46,15 +46,15 @@ shiftsRouter.get("/requestedshifts", (req, res) => {
             console.log(err);
             res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
         } else {
-            results.forEach(result => {
-                if (result.FirstName) {
-                    result.FirstName = result.FirstName.split(",");
-                    result.LastName = result.LastName.split(",");
+            results.forEach((result) => {
+                if (result.FullName) {
+                    result.FullName = result.FullName.split(",");
+                    result.InterestedEmployeeIDs = result.InterestedEmployeeIDs.split(",");
                 } else {
-                    result.FirstName = result.FirstName;
-                    result.LastName = result.LastName;
+                    result.FullName = result.FullName;
+                    result.InterestedEmployeeIDs = result.InterestedEmployeeIDs;
                 }
-            })
+            });
             res.json(results);
         }
     });
@@ -91,18 +91,14 @@ shiftsRouter.post("/", (req, res) => {
         INSERT INTO shifts (Date, ShiftStart, ShiftEnd,  EmployeeID) VALUES (?, ?, ?, ?)
     `;
 
-    connection.query(
-        queryString,
-        [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.EmployeeID],
-        (err, results) => {
-            if (err) {
-                console.log(err);
-                res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
-            } else {
-                res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
-            }
+    connection.query(queryString, [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.EmployeeID], (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+        } else {
+            res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
         }
-    );
+    });
 });
 
 // ===== UPDATE SHIFT WITH ID ===== \\
