@@ -2,12 +2,12 @@
     "name": "lkbh-semester-projekt-backend",
     "version": "1.0.0",
     "description": "Et booking system for LKHB",
-    "main": "app.js",
+    "main": "./js/app.js",
     "type": "module",
     "scripts": {
-        "start": "node app.js",
-        "dev": "nodemon app.js",
-        "watch": "node --watch app.js"
+        "start": "node ./js/app.js",
+        "dev": "nodemon ./js/app.js",
+        "watch": "node --watch ./js/app.js"
     },
     "author": "JMMP",
     "license": "ISC",

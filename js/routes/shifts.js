@@ -91,14 +91,18 @@ shiftsRouter.post("/", (req, res) => {
         INSERT INTO shifts (Date, ShiftStart, ShiftEnd,  EmployeeID) VALUES (?, ?, ?, ?)
     `;
 
-    connection.query(queryString, [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.EmployeeID], (err, results) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
-        } else {
-            res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
+    connection.query(
+        queryString,
+        [req.body.Date, formattedShiftStart, formattedShiftEnd, req.body.EmployeeID],
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "der opstod en fejl ved forespørgslen!" });
+            } else {
+                res.status(201).json({ message: "Shift oprettet med succes", insertedId: results.insertId });
+            }
         }
-    });
+    );
 });
 
 // ===== UPDATE SHIFT WITH ID ===== \\
