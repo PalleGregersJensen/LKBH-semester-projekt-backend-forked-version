@@ -1,6 +1,7 @@
 // ===== IMPORTS ===== \\
 import mysql from "mysql2";
 import "dotenv/config";
+import fs from "fs/promises";
 
 //database konfigurationer
 const dbConfig = {
@@ -13,11 +14,9 @@ const dbConfig = {
 };
 
 // CERT Connection and verification
-/* 
 if (process.env.MYSQL_CERT) {
-     dbConfig.ssl = { ca: await fs.readFile("DigiCertGlobalRootCA.crt.pem") };
- }
-*/
+    dbConfig.ssl = { ca: await fs.readFile("DigiCertGlobalRootCA.crt.pem") };
+}
 
 //MySQL forbindelse
 const connection = mysql.createConnection(dbConfig);
