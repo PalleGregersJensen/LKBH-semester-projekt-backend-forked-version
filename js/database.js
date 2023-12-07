@@ -14,9 +14,9 @@ const dbConfig = {
 };
 
 // CERT Connection and verification
-// if (process.env.MYSQL_CERT) {
-//     dbConfig.ssl = { ca: await fs.readFile("DigiCertGlobalRootCA.crt.pem") };
-// }
+if (process.env.MYSQL_CERT) {
+    dbConfig.ssl = { ca: await fs.readFile("DigiCertGlobalRootCA.crt.pem") };
+}
 
 //MySQL forbindelse
 const connection = mysql.createConnection(dbConfig);
