@@ -11,7 +11,7 @@ I dette projekt har vi i samarbejde med LKbh § 107 udviklet en hjemmeside, hvor
 
 Dette er repository'et for backend-delen, som tager sig af de forskellige ruter og handlinger, som vores frontend ønsker at føre videre til databasen. Dette kan være handlinger, der kræver kendskab til og information om alle vikarer i databasen eller oprettelse af nye vagter, som tiden skrider frem.
 
-Vores online database der er hoster gennem Asure kan findes [her](Indsæt http link til online asure database).
+Vores online database der er hoster gennem Azure kan findes [her](https://lkbh-semester-projekt-backend.azurewebsites.net/).
 
 Hvis det dog kun, eller af anden årsag er så kan vores frontend-del findes [her](https://github.com/MarkusIngerslev/LKBH-semester-projekt-frontend.git).
 
