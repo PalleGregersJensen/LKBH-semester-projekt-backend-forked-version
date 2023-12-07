@@ -55,16 +55,7 @@ substitutesRouter.post("/", (req, res) => {
 
     connection.query(
         queryString,
-        [
-            req.body.FirstName,
-            req.body.LastName,
-            req.body.DateOfBirth,
-            req.body.Mail,
-            req.body.Number,
-            req.body.Username,
-            req.body.IsAdmin,
-            passwordHash,
-        ],
+        [req.body.FirstName, req.body.LastName, req.body.DateOfBirth, req.body.Mail, req.body.Number, req.body.Username, req.body.IsAdmin, passwordHash],
         (err, results) => {
             if (err) {
                 console.log(err);
@@ -100,10 +91,10 @@ substitutesRouter.put("/admins/:id", (req, res) => {
     let queryString = ``;
 
     // Hash adgangskoden før du gemmer den i databasen
-    const passwordHash = crypto.createHash("sha256").update(req.body.PasswordHash).digest("hex");
+    // const passwordHash = crypto.createHash("sha256").update(req.body.PasswordHash).digest("hex");
 
     queryString = /*sql*/ `
-        UPDATE substitutes SET FirstName = ?, LastName = ?, DateOfBirth = ?, Mail = ?, Number = ?, Username = ?, PasswordHash = ? WHERE EmployeeID = ?
+        UPDATE substitutes SET FirstName = ?, LastName = ?, DateOfBirth = ?, Mail = ?, Number = ?, Username = ? WHERE EmployeeID = ?
     `;
 
     connection.query(
@@ -115,7 +106,7 @@ substitutesRouter.put("/admins/:id", (req, res) => {
             req.body.Mail,
             req.body.Number,
             req.body.Username,
-            passwordHash,
+            // passwordHash,
             req.params.id,
         ],
         (err, results) => {
