@@ -79,6 +79,21 @@ BEGIN
     END IF;
 END;
 
+-- Trigger for updating and deleting relatet shifts and shiftinterests from deletet substitut.
+CREATE TRIGGER Before_Delete_Substitute
+BEFORE DELETE ON Substitutes
+FOR EACH ROW
+BEGIN
+    -- Update Shifts-tabel
+    UPDATE Shifts
+    SET EmployeeID = NULL
+    WHERE  EmployeeID = OLD.EmployeeID;
+
+    -- Delete relatet rows from shiftinterests
+    DELETE FROM ShiftInterest
+    WHERE EmployeeID = OLD.EmployeeID;
+end;
+
 -- Insert 20 unique substitutes
 INSERT INTO Substitutes (FirstName, LastName, DateOfBirth, Mail, Number, IsAdmin, Username, PasswordHash)
 VALUES
