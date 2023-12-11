@@ -1,19 +1,19 @@
 <div align="center"> 
-    Indsæt billed 
+    Indsæt banner billed 
     <!-- <img src="" style="width: 100%;"> -->
 </div>
 
-# LKbh § 107 - Bookning af vikar tider
+# LKbh § 107 - Bookning af vikar tider (backend)
 
 Dette er repository'et for vores backend-del af 2. semesters eksamensprojekt.
 
-I dette projekt har vi i samarbejde med LKbh § 107 udviklet en hjemmeside, hvor det bliver gjort nemmere for både vikarer og driftsansvarlige at håndtere booking og overblik over arbejdstider.
+I dette projekt har vi samarbejdet med LKbh § 107 om at udviklet en hjemmeside, hvor det bliver gjort nemmere for både vikarer og driftsansvarlige at håntere booking og overblik over arbejders tider for vikarer.
 
 Dette er repository'et for backend-delen, som tager sig af de forskellige ruter og handlinger, som vores frontend ønsker at føre videre til databasen. Dette kan være handlinger, der kræver kendskab til og information om alle vikarer i databasen eller oprettelse af nye vagter, som tiden skrider frem.
 
-Vores online database der er hoster gennem Azure kan findes [her](https://lkbh-semester-projekt-backend.azurewebsites.net/).
+Vores online database der er hoster gennem Azure og kan findes [her](https://lkbh-semester-projekt-backend.azurewebsites.net/).
 
-Hvis det dog kun, eller af anden årsag er så kan vores frontend-del findes [her](https://github.com/MarkusIngerslev/LKBH-semester-projekt-frontend.git).
+Frontend-/hjemmeside-delen af projektet kan findes [her](https://github.com/MarkusIngerslev/LKBH-semester-projekt-frontend.git).
 
 ## Indhold
 
@@ -45,7 +45,7 @@ For at clone backend projektet skal du blot gøre følgende:
 cd din/målmappe
 ```
 
-3. Når dy er i den mappe som projektet skal placeres, så skal du bruge følgende kammando til at clone projektet fra GitHub:
+3. Når du er i den mappe som projektet skal placeres, så skal du bruge følgende kammando til at clone projektet fra GitHub:
 
 ```bash
 git clone https://github.com/MarkusIngerslev/LKBH-semester-projekt-backend.git
