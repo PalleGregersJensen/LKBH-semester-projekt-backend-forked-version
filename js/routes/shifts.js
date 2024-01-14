@@ -109,26 +109,40 @@ shiftsRouter.post("/", (req, res) => {
 shiftsRouter.put("/:id", (req, res) => {
     let queryString = ``;
 
-    queryString = /*sql*/ `
-        UPDATE shifts SET EmployeeID = ? WHERE ShiftID = ?
-    `;
+    console.log("Request Payload", req.body);
 
-    connection.query(queryString, [req.body.EmployeeID, req.params.id], (err, results) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json({ error: "Der opstod en fejl ved forespørgslen!" });
-        } else {
-            if (results.affectedRows > 0) {
-                res.status(200).json({
-                    message: "Shift opdateret med succes",
-                    id: req.params.id,
-                    updatedFields: req.body,
-                });
+    // Check if req.body.EmployeeID is provided, if not, set it to NULL
+    const employeeID = req.body.EmployeeID !== undefined ? req.body.EmployeeID : null;
+
+    // queryString = /*sql*/ `
+    //     UPDATE shifts SET EmployeeID = ? WHERE ShiftID = ?
+    // `;
+
+    queryString = /*sql*/ `
+    UPDATE shifts SET ShiftStart = ?, ShiftEnd = ?, Date = ? WHERE ShiftID = ?
+`;
+
+    connection.query(
+        queryString,
+        [req.body.ShiftStart, req.body.ShiftEnd, req.body.Date, req.params.id],
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Der opstod en fejl ved forespørgslen!" });
             } else {
-                res.status(404).json({ error: "Shift med angivet ID blev ikke fundet." });
+                if (results.affectedRows > 0) {
+                    res.status(200).json({
+                        message: "Shift opdateret med succes",
+                        id: req.params.id,
+                        updatedFields: req.body,
+                    });
+                    console.log(results);
+                } else {
+                    res.status(404).json({ error: "Shift med angivet ID blev ikke fundet." });
+                }
             }
         }
-    });
+    );
 });
 
 // ===== DELETE SHIFT WITH ID ===== \\
