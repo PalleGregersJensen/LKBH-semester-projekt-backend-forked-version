@@ -1,8 +1,9 @@
 // ===== IMPORTS ===== \\
-import { Router } from "express";
+import { Router, response } from "express";
 import connection from "../database.js";
 // import crypto to encrypt Passwordhash
 import crypto from "crypto";
+import { error } from "console";
 
 const substitutesRouter = Router();
 
@@ -44,6 +45,20 @@ substitutesRouter.get("/:id", (req, res) => {
 
 // ===== CREATE NEW SUBSTITUTE ===== \\
 substitutesRouter.post("/", (req, res) => {
+
+    // SELECT all with entered username
+    let checkUserName = /*sql*/ `
+        SELECT * FROM substitutes WHERE Username = ?
+    `;
+
+    // Check if any users have same username in database
+    connection.query(checkUserName, [req.body.Username], (error, results) => {
+        console.log(results);
+        // If matching results, send back error message. Else no other users in databse with same username - create new user.
+        if (results.length > 0) {
+            return res.status(400).json({ error: "Brugernavnet eksisterer allerede. Vælg venligst et andet." })
+        } else {
+        
     let queryString = ``;
 
     // Hash adgangskoden før du gemmer den i databasen
@@ -55,7 +70,16 @@ substitutesRouter.post("/", (req, res) => {
 
     connection.query(
         queryString,
-        [req.body.FirstName, req.body.LastName, req.body.DateOfBirth, req.body.Mail, req.body.Number, req.body.Username, req.body.IsAdmin, passwordHash],
+        [
+            req.body.FirstName,
+            req.body.LastName,
+            req.body.DateOfBirth,
+            req.body.Mail,
+            req.body.Number,
+            req.body.Username,
+            req.body.IsAdmin,
+            passwordHash,
+        ],
         (err, results) => {
             if (err) {
                 console.log(err);
@@ -65,6 +89,10 @@ substitutesRouter.post("/", (req, res) => {
             }
         }
     );
+
+        }
+        });
+        
 });
 
 // ===== DELETE SUBSTITUTE WITH ID ===== \\
